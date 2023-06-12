@@ -175,19 +175,18 @@
           </thead>
           <tbody>
 
-            <?php foreach($orders as $order){?>
+          <?php foreach($orders as $order){?>
             <tr>
-              <td><?php echo $order['order_id'];?></td>
-              <td><?php echo $order['shoppe_orderid'];?></td>
-              <td><?php echo $order['order_status'];?></td>
-              <td><?php echo $order['customer_name'];?></td>
-              <td><?php echo $order['order_quantity'];?></td>
-              <td><?php echo $order['order_date'];?></td>
-              <td><?php echo $order['total_payment'];?></td>
-
+              <td><?php echo htmlspecialchars($order['id'], ENT_QUOTES, 'UTF-8');?></td>
+              <td><?php echo htmlspecialchars($order['shoppe_order_id'], ENT_QUOTES, 'UTF-8');?></td>
+              <td><?php echo htmlspecialchars($order['order_status'], ENT_QUOTES, 'UTF-8');?></td>
+              <td><?php echo htmlspecialchars($order['customer_name'], ENT_QUOTES, 'UTF-8');?></td>
+              <td><?php echo htmlspecialchars($order['order_quantity'], ENT_QUOTES, 'UTF-8');?></td>
+              <td><?php echo htmlspecialchars($order['order_date'], ENT_QUOTES, 'UTF-8');?></td>
+              <td><?php echo htmlspecialchars($order['total_payment'], ENT_QUOTES, 'UTF-8');?></td>
             </tr>
+          <?php }?>
 
-            <?php }?>
 
           </tbody>
         </table>

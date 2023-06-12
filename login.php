@@ -73,7 +73,7 @@ if(isset($_POST['login_btn'])){
   
 ?>
 
-<section id="myDiv" class="animate-bottom" style="">
+<section id="myDiv" class="animate-bottom" >
     <div class="image_container">
         <img src="images/backgroundimage.jpg" alt="">
     </div>

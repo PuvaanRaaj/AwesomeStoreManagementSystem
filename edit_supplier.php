@@ -19,11 +19,25 @@
        $supplier_number = $_POST['number'];
        $supplier_shop_name = $_POST['shop'];
 
-       
-        $stmt = $conn->prepare("UPDATE suppliers SET supplier_name=?, supplier_email=?, supplier_address=?, supplier_number=?, supplier_shop_name=?
-                                  WHERE id=?");
-        $stmt->bind_param('sssisi',$supplier_name, $supplier_email, $supplier_address, 
-                           $supplier_number, $supplier_shop_name, $id);
+       // Input validation
+       if (empty($supplier_name) || empty($supplier_address) || empty($supplier_shop_name)) {
+           echo "Name, Address and Shop Name must not be empty.";
+           exit;
+       }
+
+       if (!filter_var($supplier_email, FILTER_VALIDATE_EMAIL)) {
+           echo "Invalid email format.";
+           exit;
+       }
+
+       if (!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $supplier_number)) {
+           echo "Invalid phone number format. Expected format: 123-456-7890.";
+           exit;
+       }
+
+       // Continue with the update if validation passed
+        $stmt = $conn->prepare("UPDATE suppliers SET supplier_name=?, supplier_email=?, supplier_address=?, supplier_number=?, supplier_shop_name=? WHERE id=?");
+        $stmt->bind_param('sssisi',$supplier_name, $supplier_email, $supplier_address, $supplier_number, $supplier_shop_name, $id);
 
         if($stmt->execute()){
             ?>
@@ -43,8 +57,8 @@
      exit;
    }
 
-
 ?>
+
 
 <div class="container-fluid">
   <div class="row"  style="min-height: 100%">
@@ -63,46 +77,40 @@
 
 
 
-          <div class="mx-auto container">
-              <form id="edit-form"  method="POST" action="edit_supplier.php">
-                <p style="color: red;"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
-                <div class="form-group mt-2">
-
-                 <?php foreach($suppliers as $supplier){ ?>
-
-                   <input type="hidden" name="id" value="<?php echo $supplier['id'];?>" />
-
-                    <label>Supplier Name</label>
-                    <input type="text" class="form-control"  value="<?php echo $supplier['supplier_name']?>" name="name" placeholder="Supplier Name" required/>
-                </div>
-                
-                <div class="form-group mt-2">
-                    <label>Supplier Email</label>
-                    <input type="text" class="form-control" value="<?php echo $supplier['supplier_email']?>"  name="email" placeholder="Supplier Email" required/>
-                </div>
+            <div class="mx-auto container">
+              <form id="edit-form" method="POST" action="edit_supplier.php">
+                  <p style="color: red;"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
                   <div class="form-group mt-2">
-                      <label>Supplier Address</label>
-                      <input type="text" class="form-control" value="<?php echo $supplier['supplier_address']?>"  name="address" placeholder="Supplier Address" required/>
-                  </div>
-                  <div class="form-group mt-2">
-                      <label>Supplier Number</label>
-                      <input type="text" class="form-control" value="<?php echo $supplier['supplier_number']?>"  name="number" placeholder="Supplier Phone Number" required/>
-                  </div>
-                  <div class="form-group mt-2">
-                    <label>Supplier Shop Name</label>
-                    <input type="text" class="form-control" value="<?php echo $supplier['supplier_shop_name']?>"  name="shop" placeholder="Supplier Shope Name" required/>
-                </div>
+                      <?php foreach($suppliers as $supplier){ ?>
+                          <input type="hidden" name="id" value="<?php echo htmlspecialchars($supplier['id']);?>" />
 
+                          <label>Supplier Name</label>
+                          <input type="text" class="form-control" value="<?php echo htmlspecialchars($supplier['supplier_name'])?>" name="name" placeholder="Supplier Name" required/>
+                      </div>
+                      
+                      <div class="form-group mt-2">
+                          <label>Supplier Email</label>
+                          <input type="email" class="form-control" value="<?php echo htmlspecialchars($supplier['supplier_email'])?>" name="email" placeholder="Supplier Email" required/>
+                      </div>
+                      <div class="form-group mt-2">
+                          <label>Supplier Address</label>
+                          <input type="text" class="form-control" value="<?php echo htmlspecialchars($supplier['supplier_address'])?>" name="address" placeholder="Supplier Address" required/>
+                      </div>
+                      <div class="form-group mt-2">
+                          <label>Supplier Number</label>
+                          <input type="tel" class="form-control" value="<?php echo htmlspecialchars($supplier['supplier_number'])?>" name="number" placeholder="Supplier Phone Number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
+                      </div>
+                      <div class="form-group mt-2">
+                          <label>Supplier Shop Name</label>
+                          <input type="text" class="form-control" value="<?php echo htmlspecialchars($supplier['supplier_shop_name'])?>" name="shop" placeholder="Supplier Shop Name" required/>
+                      </div>
+                      <div class="form-group mt-3">
+                          <input type="submit" class="btn btn-primary" name="edit" value="Edit"/>
+                      </div>
+                      <?php } ?>
+                </form>
+           </div>
 
-
-                <div class="form-group mt-3">
-                    <input type="submit" class="btn btn-primary" name="edit" value="Edit"/>
-                </div>
-
-                <?php } ?>
-
-              </form>
-          </div>
 
       </div>
     </main>

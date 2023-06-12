@@ -1,0 +1,104 @@
+/* By Puvaan Raaj */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+
+* {
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+}
+
+body {
+ font-family: 'Poppins', sans-serif;
+}
+
+h4 {
+    font-size: 1.2rem;
+}
+
+/* Navbar */
+
+.navbar {
+    font-size: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,1);
+}
+
+.navbar a {
+    color: white;
+}
+.navbar a:hover {
+    color: white;
+}
+
+.item {
+    color : white;
+    transition: 0.4s ease;
+}
+
+.dropdown-menu a {
+    color:black;
+}
+
+.dropdown-menu a:hover {
+    color:black;
+}
+
+.dropdown a:hover {
+    color: coral;
+}
+
+.store-image {
+    height: 50px;
+    width: 75px;
+    margin: 0 10px;
+    position: relative;
+    bottom: 5px;
+}
+
+.nav-content {
+    padding-right: 10px ;
+}
+
+.btn a{
+
+  text-decoration: none;
+    padding: 0;
+  }
+
+  button:hover {
+    color : coral;
+  }
+
+a {
+  text-decoration: none;
+}
+
+.menu li {
+    text-decoration: none;
+    color: black;
+}
+
+/* PAGE */
+
+.container-fluid {
+    padding: 2% 0.5%;
+}
+
+/* Footer */
+
+footer {
+    background-color: #EFF5F5 ;
+    color: black;
+}
+
+.footer .row h4 {
+    text-align: center;
+}
+
+/* Carousel */
+
+img {
+    width: 20%;
+    height: 100px;
+}
+  

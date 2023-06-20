@@ -9,7 +9,7 @@ include('config/db.php');
 
 <?php 
    
-   if(!isset($_SESSION['admin_logged_in'])){
+   if(!isset($_SESSION['staff_logged_in'])){
          header('location: login.php');
          exit();
 
@@ -22,11 +22,18 @@ include('config/db.php');
         $stmt->bind_param('i',$product_id);
 
         if($stmt->execute()){
-
-          header('location: products.php?deleted_successfully=Product has been deleted successfully');
-
+          ?>
+          <script>
+          window.location.href="products.php?deleted_successfully=Product has been deleted successfully"
+        </script>
+          <?php
         }else{
-            header('location: products.php?deleted_failure=Could not delete product');
+
+          ?>
+          <script>
+          window.location.href="products.php?deleted_failure=Could not delete product"
+        </script>
+          <?php
         }
    
    }

@@ -38,8 +38,7 @@
                     </div>
                     <div class="form-group mt-2">
                         <label>Supplier Phone Number</label>
-                        <input type="tel" class="form-control" name="number" placeholder="Insert Supplier Number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
-                        <span id="numberError" style="color: red; display: none;">Please match the requested format: 123-456-7890</span>
+                        <input type="tel" class="form-control" name="number" placeholder="Insert Supplier Number" required/>
                     </div>
                     <div class="form-group mt-2">
                         <label>Supplier Shop</label>

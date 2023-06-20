@@ -11,7 +11,7 @@ body {
     padding: 3% 5%;
     top: 15%;
     left: 30%;
-    width: 50%; /* Adjust the width value as per your desired size */
+   
     max-height: 80%;
     display: grid;
     border: 2px solid black;

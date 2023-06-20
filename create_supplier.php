@@ -23,11 +23,6 @@ if(isset($_POST['create_supplier'])){
       exit();
    }
 
-   if (!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $supplier_number)) {
-      // Handle invalid phone number
-      header('Location: supplier.php?error=Invalid Phone Number');
-      exit();
-   }
 
   //create a new supplier
   $stmt = $conn->prepare("INSERT INTO suppliers (supplier_name, supplier_email, supplier_address, 
@@ -36,9 +31,17 @@ if(isset($_POST['create_supplier'])){
   $stmt->bind_param('sssis',$supplier_name, $supplier_email, $supplier_address, $supplier_number, $supplier_shop_name);
 
     if($stmt->execute()){
-        header('location: supplier.php');
+        ?>
+        <script>
+        window.location.href="supplier.php?success=supplier created successfully"
+      </script>
+        <?php
     }else{
-        header('location: supplier.php');
+        ?>
+        <script>
+        window.location.href="supplier.php?success=supplier cannot be created"
+      </script>
+        <?php
     }
 }
 

@@ -133,7 +133,7 @@
           </thead>
           <tbody>
           <?php foreach($products as $product){?>
-            <tr <?php echo ($product['stock_quantity'] < $product['stock_limit']) ? 'style="background-color: red;"' : ''; ?>>
+            <tr <?php echo ($product['stock_quantity'] < $product['stock_limit']) ? 'style="background-color: #FFE5CA;"' : ''; ?>>
                 <td><?php echo htmlspecialchars($product['id']);?></td>
                 <td><img src="<?php echo "assets/product-images/". $product['product_image'];?>" style="width: 70px; height:70px"/></td>
                 <td><?php echo htmlspecialchars($product['product_name']);?></td>
@@ -143,9 +143,10 @@
                 <td><?php echo htmlspecialchars($product['stock_limit']);?></td>
                 <td><?php echo htmlspecialchars($product['created_at']);?></td>
 
-                <td><a class="btn btn-warning" href="<?php echo "edit_images.php?product_id=".$product['id']."&product_name=".$product['product_name'];?>">Edit Images</a></td>
-                <td><a class="btn btn-primary" href="edit_product.php?product_id=<?php echo $product['id'];?>">Edit</a></td>
-                <td><a class="btn btn-danger"  href="delete_products.php?product_id=<?php echo $product['id'];?>" >Delete</a></td>
+                <td><a class="btn btn-warning" href="<?php echo "edit_images.php?id=".$product['id']."&product_name=".$product['product_name'];?>">Edit Images</a></td>
+                <td><a class="btn btn-primary" href="edit_product.php?id=<?php echo $product['id'];?>"><i class="fas fa-edit"></i>Edit</a></td>
+                <td><a class="btn btn-danger"  href="delete_products.php?id=<?php echo $product['id'];?>"><i class="fas fa-trash-alt"></i>Delete</a></td>
+
             </tr>
         <?php }?>
 

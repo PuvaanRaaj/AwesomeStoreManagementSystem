@@ -1,30 +1,27 @@
-<?php include('layouts/admin_login_header.php'); ?>
+<?php 
 
-<?php
+include('layouts/admin_login_header.php'); 
+// Set secure cookie parameters
+session_set_cookie_params([
+  'secure' => true,      // only send cookie over HTTPS
+  'httponly' => true,    // hide cookie from JavaScript
+  'samesite' => 'Strict' // cookie only sent for same-site requests
+]);
+
 include('config/db.php');
-
-if(isset($_SESSION['admin_logged_in'])){
-    ?>
-    <script>
-      window.location.href="index.php"
-    </script>
-    <?php
-    
-    exit;
-}
-
 
 if(isset($_POST['login_btn'])){
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    
   
-    $stmt = $conn->prepare("SELECT id,admin_name, admin_email, admin_password FROM admins WHERE admin_email = ? LIMIT 1");
+    $stmt = $conn->prepare("SELECT id,username, admin_name, admin_email, admin_password FROM admins WHERE admin_email = ? LIMIT 1");
   
     $stmt->bind_param('s',$email);
   
     if($stmt->execute()){
-        $stmt->bind_result($admin_id,$admin_name,$admin_email,$hashed_password);
+        $stmt->bind_result($admin_id, $username, $admin_name,$admin_email,$hashed_password);
         $stmt->store_result();
   
         if($stmt->num_rows() == 1){
@@ -32,6 +29,7 @@ if(isset($_POST['login_btn'])){
            
            if(password_verify($password, $hashed_password)) {
               $_SESSION['admin_id'] = $admin_id;
+              $_SESSION['username'] = $username;
               $_SESSION['admin_name'] = $admin_name;
               $_SESSION['admin_email'] = $admin_email;
               $_SESSION['admin_logged_in'] = true;
@@ -95,8 +93,8 @@ if(isset($_POST['login_btn'])){
 
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control"  placeholder="Enter Your Password" id="myInput">
-                            <i class="far fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+                            <input type="password" name="password" class="form-control" placeholder="Enter Your Password" id="password-field">
+                            <button type="button" id="toggle-password" style="cursor: pointer;" class="mt-2 mb-2 btn btn-dark mt-3 ">Show</button>
                         </div>
 
                         <!-- reCaptcha -->
@@ -116,6 +114,27 @@ if(isset($_POST['login_btn'])){
     </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script>
+    $(function() {
+        $('#toggle-password').click(function() {
+            if ($(this).text() === 'Show') {
+                $(this).text('Hide');
+                $('#password-field').attr('type', 'text');
+            } else {
+                $(this).text('Show');
+                $('#password-field').attr('type', 'password');
+            }
+        });
+        
+        $('form button[type="submit"]').on('click', function() {
+            $('#toggle-password').text('Show');
+            $('#password-field').attr('type', 'password');
+        });
+    });
+</script>
+
 <script type="text/javascript">
           var myVar;
 
@@ -130,14 +149,22 @@ if(isset($_POST['login_btn'])){
     </script>
 
 
-<script type="text/javascript">
-
-    $document.on('click','#login_btn',function(){
-          var response = grecaptcha.getResponse();
-          alert(response.length);
-
-    });
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#login_btn').click(function(e){
+                var response = grecaptcha.getResponse();
+                if(response.length == 0) { 
+                    //reCaptcha not verified
+                    alert("Please verify you are not a robot."); 
+                    e.preventDefault();
+                    return false;
+                }
+                //captcha verified
+                //do the rest of your validations here
+            });
+        });
     </script>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>

@@ -2,7 +2,7 @@
 
 <?php
 
-    if(!isset($_SESSION['admin_logged_in'])){
+    if(!isset($_SESSION['staff_logged_in'])){
       ?>
       <script>
         window.location.href="login.php"
@@ -62,17 +62,36 @@
            </div>
        </div>
 
-      <?php if(isset($_GET['order_created'])){?>
-           <p class="text-center" style="color: green;"><?php echo $_GET['order_created'];?></p>
-        <?php } ?>
+          <?php if(isset($_GET['order_created'])){?>
+              <script>
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Success',
+                      text: '<?php echo $_GET['order_created'];?>'
+                  })
+              </script>
+          <?php } ?>
 
-      <?php if(isset($_GET['order_updated'])){?>
-           <p class="text-center" style="color: green;"><?php echo $_GET['order_updated'];?></p>
-        <?php } ?>
+          <?php if(isset($_GET['order_updated'])){?>
+              <script>
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Success',
+                      text: '<?php echo $_GET['order_updated'];?>'
+                  })
+              </script>
+          <?php } ?>
 
-        <?php if(isset($_GET['order_failed'])){?>
-           <p class="text-center" style="color: red;"><?php echo $_GET['order_failed'];?></p>
-        <?php } ?>
+          <?php if(isset($_GET['order_failed'])){?>
+              <script>
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: '<?php echo $_GET['order_failed'];?>'
+                  })
+              </script>
+          <?php } ?>
+
 
 
 
@@ -84,14 +103,11 @@
               <th scope="col">Order Id</th>
               <th scope="col">Shoppe Order Id</th>
               <th scope="col">Order Status</th>
-              <th scope="col">Product Id</th>
+           
               <th scope="col">Customer name</th>
-              <th scope="col">Customer email</th>
-              <th scope="col">Customer address</th>
-              <th scope="col">Customer Phone Number</th>
-              <th scope="col">Order Quantity</th>
-              <th scope="col">Order Date</th>
+        
               <th scope="col">Total Payment</th>
+              <th scope="col">View</th>
               <th scope="col">Edit</th>
               <th scope="col">Delete</th>
             </tr>
@@ -99,21 +115,16 @@
           <tbody>
 
           <?php foreach($orders as $order){?>
-            <tr <?php echo ($order['order_status'] == 'Some Condition') ? 'style="background-color: red;"' : ''; ?>>
-                <td><?php echo htmlspecialchars($order['id']);?></td>
-                <td><?php echo htmlspecialchars($order['shoppe_order_id']);?></td>
-                <td><?php echo htmlspecialchars($order['order_status']);?></td>
-                <td><?php echo htmlspecialchars($order['product_id']);?></td>
-                <td><?php echo htmlspecialchars($order['customer_name']);?></td>
-                <td><?php echo htmlspecialchars($order['customer_email']);?></td>
-                <td><?php echo htmlspecialchars($order['customer_address']);?></td>
-                <td><?php echo htmlspecialchars($order['customer_number']);?></td>
-                <td><?php echo htmlspecialchars($order['order_quantity']);?></td>
-                <td><?php echo htmlspecialchars($order['order_date']);?></td>
-                <td><?php echo htmlspecialchars($order['total_payment']);?></td>
-                <td><a class="btn btn-primary" href="edit_order.php?id=<?php echo htmlspecialchars($order['id']);?>">Edit</a></td>
-                <td><a class="btn btn-danger" href="delete.order.php?id=<?php echo htmlspecialchars($order['id']);?>">Delete</a></td>
-            </tr>
+              <tr <?php echo ($order['order_status'] == 'Some Condition') ? 'style="background-color: red;"' : ''; ?>>
+                  <td><?php echo htmlspecialchars($order['id']);?></td>
+                  <td><?php echo htmlspecialchars($order['shoppe_order_id']);?></td>
+                  <td><?php echo htmlspecialchars($order['order_status']);?></td>
+                  <td><?php echo htmlspecialchars($order['customer_name']);?></td>
+                  <td><?php echo htmlspecialchars($order['total_payment']);?></td>
+                  <td><button class="btn btn-info view-btn" data-id="<?php echo htmlspecialchars($order['id']);?>"><i class="fas fa-eye"></i> View</button></td>
+                  <td><a class="btn btn-primary" href="edit_order.php?id=<?php echo htmlspecialchars($order['id']);?>"><i class="fas fa-edit"></i> Edit</a></td>
+                  <td><a class="btn btn-danger" href="delete.order.php?id=<?php echo htmlspecialchars($order['id']);?>"><i class="fas fa-trash-alt"></i> Delete</a></td>
+              </tr>
           <?php }?>
 
 
@@ -154,9 +165,54 @@
 
 </div>
 
+            <!-- Modal -->
+          <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="orderDetails">
+                  <!-- Order details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
+
+    <script>
+    $(document).ready(function(){
+    $(".view-btn").click(function(){
+        var orderId = $(this).data('id');
+
+        $.ajax({
+            url: 'get_order.php',
+            type: 'GET',
+            data: {id: orderId},
+            success: function(data){
+                // assuming data is a HTML
+                $('#orderDetails').html(data);
+                $('#orderModal').modal('show');
+                console.log("Success: ", data);
+            },
+            error: function(error) {
+                console.log("Error: ", error);
+            }
+        });
+    });
+});
+
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
+            
   </body>
 </html>

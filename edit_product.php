@@ -2,9 +2,9 @@
 
 include('layouts/header.php');
 
-   if(isset($_GET['product_id'])){
-    $product_id = $_GET['product_id'];
-    $stmt = $conn->prepare("SELECT * FROM products WHERE product_id=?");
+   if(isset($_GET['id'])){
+    $product_id = $_GET['id'];
+    $stmt = $conn->prepare("SELECT * FROM products WHERE id=?");
     $stmt->bind_param('i',$product_id);
     $stmt->execute();
 
@@ -15,35 +15,38 @@ include('layouts/header.php');
     // Validate product name
     $product_name = trim($_POST['name']);
     if (!preg_match("/^[A-Za-z0-9\s\-_]+$/", $product_name)) {
-        header('Location: edit_product.php?product_id='.$_POST['product_id'].'&error=Invalid product name');
+        header('Location: edit_product.php?id='.$_POST['id'].'&error=Invalid product name');
         exit();
     }
     
     // Validate stock quantity and limit
     $stock_quantity = $_POST['stock'];
     $stock_limit = $_POST['limit'];
-    if ($stock_quantity < 0 || $stock_limit < 0) {
-        header('Location: edit_product.php?product_id='.$_POST['product_id'].'&error=Quantity and limit must be non-negative');
+    if ($stock_quantity <  $stock_limit ) {
+        ?>
+      <script>
+        window.location.href="edit_product.php?id='.$_POST['id'].'&error=Quantity should not be less than  limit"
+      </script>
+      <?php
         exit();
     }
-
     // Validate unit price
     $unit_price = $_POST['price'];
     if ($unit_price < 0) {
-        header('Location: edit_product.php?product_id='.$_POST['product_id'].'&error=Price must be non-negative');
+        header('Location: edit_product.php?id='.$_POST['id'].'&error=Price must be non-negative');
         exit();
     }
 
-    $product_id = $_POST['product_id'];
+    $product_id = $_POST['id'];
 
-    $stmt = $conn->prepare("UPDATE products SET product_name=?, stock_quantity=?, stock_limit=?, unit_price=?
-                                  WHERE product_id=?");
-    $stmt->bind_param('siiii',$product_name,$stock_quantity,$stock_limit,$unit_price, $product_id);
+    $stmt = $conn->prepare("UPDATE products SET product_name=?, stock_quantity=?, stock_limit=?, product_price=?
+                                  WHERE id=?");
+    $stmt->bind_param('siidi',$product_name,$stock_quantity,$stock_limit,$unit_price, $product_id);
 
     if($stmt->execute()){
       ?>
       <script>
-        window.location.href="products.php?edit_success_message=Staff details has been updated successfully"
+        window.location.href="products.php?edit_success_message=Product details has been updated successfully"
       </script>
       <?php
     }else{
@@ -94,21 +97,21 @@ include('layouts/header.php');
 
                 <?php foreach($products as $product){ ?>
                     <div class="form-group mt-2">
-                        <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['product_id']);?>" />
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($product['id']);?>" />
                         <label>Product Name</label>
                         <input type="text" class="form-control" value="<?php echo htmlspecialchars($product['product_name']);?>" name="name" placeholder="Please enter the product name" required/>
                     </div>
                     <div class="form-group mt-2">
-                        <label>Unit Price</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($product['unit_price']);?>" name="price" placeholder="Please enter the product per unit price" required/>
+                        <label>Product Price</label>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($product['product_price']);?>" name="price" placeholder="Please enter the product per unit price" required/>
                     </div>
                     <div class="form-group mt-2">
                         <label>Available Stock Quantity</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($product['stock_quantity']);?>" name="stock" placeholder="Price" required/>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($product['stock_quantity']);?>" name="stock" placeholder="Please Enter The Stock Limit" required/>
                     </div>
                     <div class="form-group mt-2">
                         <label>Product Stock Limit</label>
-                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($product['stock_limit']);?>" name="limit" placeholder="Color" required/>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($product['stock_limit']);?>" name="limit" placeholder="Please Enter the product limit" required/>
                     </div>
                     <div class="form-group mt-3">
                         <input type="submit" class="btn btn-primary" name="edit_btn" value="Edit"/>

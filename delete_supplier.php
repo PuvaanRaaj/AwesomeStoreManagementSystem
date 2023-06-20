@@ -14,9 +14,18 @@ if(isset($_GET['id'])){
     $stmt->bind_param('i',$id);
 
     if($stmt->execute()){
-      header('location: supplier.php?deleted_successfully=Supplier details has been deleted successfully');
+        ?>
+        <script>
+        window.location.href="supplier.php?success=deleted_successfully=Supplier details has been deleted successfully"
+      </script>
+        <?php
+      
     }else{
-        header('location: supplier.php?deleted_failure=Could not delete supplier detail');
+        ?>
+        <script>
+        window.location.href="supplier.php?deleted_failure=Could not delete supplier detail"
+      </script>
+        <?php 
     }
 }
 ?>

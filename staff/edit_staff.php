@@ -1,14 +1,14 @@
 <?php include('layouts/header.php'); ?>
 
 <?php
-if (!isset($_GET['staff_id']) && !isset($_POST['edit'])) {
+if (!isset($_GET['id']) && !isset($_POST['edit'])) {
     header('Location: staff.php');
     exit;
 }
 
-if (isset($_GET['staff_id'])) {
-    $staff_id = $_GET['staff_id'];
-    $stmt = $conn->prepare("SELECT * FROM staffs WHERE staff_id=?");
+if (isset($_GET['id'])) {
+    $staff_id = $_GET['id'];
+    $stmt = $conn->prepare("SELECT * FROM staffs WHERE id=?");
     $stmt->bind_param('i', $staff_id);
     $stmt->execute();
 
@@ -20,22 +20,30 @@ if (isset($_GET['staff_id'])) {
     $staff_email = $_POST['email'];
     $staff_address = $_POST['address'];
     $staff_salary = $_POST['salary'];
-    $staff_password = $_POST['password'];
+
 
     // Input validation
-    if (empty($staff_name) || empty($staff_age) || empty($staff_email) || empty($staff_address) || empty($staff_salary) || empty($staff_password)) {
+    if (empty($staff_name) || empty($staff_age) || empty($staff_email) || empty($staff_address) || empty($staff_salary)) {
         header('Location: staff.php?error=Please fill in all fields');
         exit();
     }
 
-    $stmt = $conn->prepare("UPDATE staffs SET staff_name=?, staff_age=?, staff_email=?, staff_address=?, staff_salary=?, staff_password=? WHERE staff_id=?");
-    $stmt->bind_param('sissdsi', $staff_name, $staff_age, $staff_email, $staff_address, $staff_salary, $staff_password, $staff_id);
+    $stmt = $conn->prepare("UPDATE staffs SET staff_name=?, staff_age=?, staff_email=?, staff_address=?, staff_salary=? WHERE id=?");
+    $stmt->bind_param('sissdi', $staff_name, $staff_age, $staff_email, $staff_address, $staff_salary, $staff_id);
 
     if ($stmt->execute()) {
-        header('Location: staff.php?edit_success_message=Staff details have been updated successfully');
+        ?>
+        <script>
+        window.location.href="staff.php?edit_success_message=Staff details have been updated successfully"
+      </script>
+        <?php
         exit();
     } else {
-        header('Location: staff.php?edit_failure_message=Error occurred, please try again');
+        ?>
+        <script>
+        window.location.href="staff.php?edit_failure_message=Error occurred, please try again"
+      </script>
+        <?php
         exit();
     }
 }
@@ -62,10 +70,10 @@ if (isset($_GET['staff_id'])) {
                     <form id="edit-form" method="POST" action="edit_staff.php">
                         <p style="color: red;"><?php if (isset($_GET['error'])) { echo $_GET['error']; } ?></p>
                         <?php foreach ($staffs as $staff) { ?>
-                            <input type="hidden" name="id" value="<?php echo $staff['staff_id']; ?>" />
+                            <input type="hidden" name="id" value="<?php echo $staff['id']; ?>" />
                             <div class="form-group mt-2">
                                 <label>Staff Name</label>
-                                <input type="text" class="form-control" id="staff-name" value="<?php echo $staff['staff_name']; ?>" name="name" placeholder="Name" required/>
+                                <input type="text" class="form-control" id="staff-name" value="<?php echo $staff['staff_name']; ?>" name="name" placeholder="Name" required/ readonly>
                             </div>
                             <div class="form-group mt-2">
                                 <label>Staff Age</label>

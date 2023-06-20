@@ -107,8 +107,8 @@ $staffs = $stmt2->get_result();
                                 <td><?php echo htmlspecialchars($staff['staff_email']); ?></td>
                                 <td><?php echo htmlspecialchars($staff['staff_address']); ?></td>
                                 <td><?php echo htmlspecialchars($staff['staff_salary']); ?></td>
-                                <td><a class="btn btn-primary" href="edit_staff.php?id=<?php echo htmlspecialchars($staff['id']); ?>">Edit</a></td>
-                                <td><a class="btn btn-danger" href="delete_staff.php?id=<?php echo htmlspecialchars($staff['id']); ?>">Delete</a></td>
+                                <td><a class="btn btn-primary" href="edit_staff.php?id=<?php echo htmlspecialchars($staff['id']); ?>"><i class="fas fa-edit"></i> Edit</a></td>
+                                <td><a class="btn btn-danger" href="delete_staff.php?id=<?php echo htmlspecialchars($staff['id']); ?>"><i class="fas fa-trash-alt"></i> Delete</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

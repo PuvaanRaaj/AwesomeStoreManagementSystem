@@ -24,9 +24,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param('sissds', $staff_name, $staff_age, $staff_email, $staff_address, $staff_salary, $hashed_password);
 
     if ($stmt->execute()) {
-        header('location: staff.php');
+        ?>
+          <script>
+          window.location.href="staff.php"
+        </script>
+          <?php
     } else {
-        header('location: staff.php?error=Could not add staff');
+        ?>
+          <script>
+          window.location.href="staff.php?error=Could not add staff"
+        </script>
+          <?php
     }
 
     $stmt->close();

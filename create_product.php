@@ -51,9 +51,18 @@ if(isset($_POST['create_product'])){
     $stmt->bind_param('siiiis',$product_name,$stock_quantity,$stock_limit,$unit_price,$supplier_id,$image_name1);
 
     if($stmt->execute()){
-        header('location: products.php?product_created=Product has been created successfully');
+        ?>
+        <script>
+        window.location.href="products.php?product_created=Product has been created successfully"
+      </script>
+        <?php
     }else{
-        header('location: products.php?product_failed=Error occurred, try again');
+        ?>
+        <script>
+        window.location.href="products.php?product_failed=Error occurred, try again"
+      </script>
+        <?php
+        
     }
 }
 ?>

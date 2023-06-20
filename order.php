@@ -62,17 +62,36 @@
            </div>
        </div>
 
-      <?php if(isset($_GET['order_created'])){?>
-           <p class="text-center" style="color: green;"><?php echo $_GET['order_created'];?></p>
-        <?php } ?>
+          <?php if(isset($_GET['order_created'])){?>
+              <script>
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Success',
+                      text: '<?php echo $_GET['order_created'];?>'
+                  })
+              </script>
+          <?php } ?>
 
-      <?php if(isset($_GET['order_updated'])){?>
-           <p class="text-center" style="color: green;"><?php echo $_GET['order_updated'];?></p>
-        <?php } ?>
+          <?php if(isset($_GET['order_updated'])){?>
+              <script>
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Success',
+                      text: '<?php echo $_GET['order_updated'];?>'
+                  })
+              </script>
+          <?php } ?>
 
-        <?php if(isset($_GET['order_failed'])){?>
-           <p class="text-center" style="color: red;"><?php echo $_GET['order_failed'];?></p>
-        <?php } ?>
+          <?php if(isset($_GET['order_failed'])){?>
+              <script>
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: '<?php echo $_GET['order_failed'];?>'
+                  })
+              </script>
+          <?php } ?>
+
 
 
 
@@ -154,7 +173,7 @@
 
 </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>

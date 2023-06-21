@@ -20,7 +20,7 @@ if (isset($_POST['shoppe_order_id'], $_POST['order_status'], $_POST['product_id'
     if (!filter_var($customer_email, FILTER_VALIDATE_EMAIL)) {
         ?>
         <script>
-          window.location.href="order.php?order_failed=Invalid email format."
+          window.location.href="order.php?error=Invalid email format."
         </script>
         <?php
         exit();
@@ -30,7 +30,7 @@ if (isset($_POST['shoppe_order_id'], $_POST['order_status'], $_POST['product_id'
     if (!is_numeric($product_id) || !is_numeric($order_quantity) || !is_numeric($total_price) || !is_numeric($total_payment)) {
         ?>
         <script>
-          window.location.href="order.php?order_failed=Invalid numerical values provided."
+          window.location.href="order.php?error=Invalid numerical values provided."
         </script>
         <?php
         exit();
@@ -40,7 +40,7 @@ if (isset($_POST['shoppe_order_id'], $_POST['order_status'], $_POST['product_id'
       if (!preg_match("/^[a-zA-Z0-9 ]*$/", $customer_name)) {
         ?>
         <script>
-          window.location.href="order.php?order_failed=Invalid customer name. Special characters are not allowed."
+          window.location.href="order.php?error=Invalid customer name. Special characters are not allowed."
         </script>
         <?php
         exit();
@@ -50,7 +50,7 @@ if (isset($_POST['shoppe_order_id'], $_POST['order_status'], $_POST['product_id'
       if (substr($customer_number, 0, 1) !== '0') {
         ?>
         <script>
-          window.location.href="order.php?order_failed=Invalid customer number. Must start with '0'."
+          window.location.href="order.php?error=Invalid customer number. Must start with '0'."
         </script>
         <?php
         exit();
@@ -77,14 +77,14 @@ if (isset($_POST['shoppe_order_id'], $_POST['order_status'], $_POST['product_id'
     // Redirect back to the form page with a success message
     ?>
     <script>
-      window.location.href="order.php?order_created=Order created successfully."
+      window.location.href="order.php?success=Order created successfully."
     </script>
     <?php
 
 } else {
     ?>
     <script>
-      window.location.href="order.php?order_failed=Missing required order data."
+      window.location.href="order.php?error=Missing required order data."
     </script>
     <?php
     // Redirect back to the form page with an error message

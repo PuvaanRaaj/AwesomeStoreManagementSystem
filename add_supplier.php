@@ -60,20 +60,58 @@
   </div>
 </div>
 
-        <script>
-        document.getElementById('create-form').addEventListener('submit', function(event) {
-            var numberInput = document.querySelector('[name="number"]');
-            var numberError = document.getElementById('numberError');
-            var pattern = new RegExp(numberInput.getAttribute('pattern'));
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            if (!pattern.test(numberInput.value)) {
-                numberError.style.display = 'block';
-                event.preventDefault();
-            } else {
-                numberError.style.display = 'none';
-            }
+<script>
+document.getElementById('create-form').addEventListener('submit', function(event) {
+    var supplierName = document.querySelector('[name="name"]');
+    var supplierEmail = document.querySelector('[name="email"]');
+    var supplierAddress = document.querySelector('[name="address"]');
+    var supplierNumber = document.querySelector('[name="number"]');
+    var supplierShop = document.querySelector('[name="shop"]');
+
+    var namePattern = /^[a-zA-Z0-9 ]*$/;
+    var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    var numberPattern = /^(\+?\d{1,4}?\s?\d{1,3}?\s?\d{1,4})$/;
+
+    if (!supplierName.value.match(namePattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid supplier name. Special characters are not allowed.'
         });
-        </script>
+        event.preventDefault();
+        return false;
+    }
+
+    if (!supplierShop.value.match(namePattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid supplier shop name. Special characters are not allowed.'
+        });
+        event.preventDefault();
+        return false;
+    }
+
+    if (!supplierEmail.value.match(emailPattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Please enter a valid email.'
+        });
+        event.preventDefault();
+        return false;
+    }
+
+    if (!supplierNumber.value.match(numberPattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid phone number. Must be a valid number format.'
+        });
+        event.preventDefault();
+        return false;
+    }
+});
+</script>
+
 
 
 

@@ -23,7 +23,6 @@ if(isset($_POST['create_supplier'])){
       exit();
    }
 
-
   //create a new supplier
   $stmt = $conn->prepare("INSERT INTO suppliers (supplier_name, supplier_email, supplier_address, 
                             supplier_number, supplier_shop_name) VALUES (?,?,?,?,?)");

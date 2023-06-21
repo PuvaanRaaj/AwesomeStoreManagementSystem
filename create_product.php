@@ -4,7 +4,7 @@ include('config/db.php');
 
 
 if(isset($_POST['create_product'])){
-
+    
     // Validate product name
     $product_name = trim($_POST['name']);
     if (!preg_match("/^[A-Za-z0-9\s\-_]+$/", $product_name)) {

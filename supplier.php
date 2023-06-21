@@ -65,60 +65,32 @@
            </div>
        </div>
 
-        <?php if(isset($_GET['edit_success_message'])){?>
-           <p class="text-center" style="color: green;"><?php echo $_GET['edit_success_message'];?></p>
-        <?php } ?>
-
-        <?php if(isset($_GET['edit_failure_message'])){?>
-           <p class="text-center" style="color: red;"><?php echo $_GET['edit_failure_message'];?></p>
-        <?php } ?>
-
-        <?php if(isset($_GET['deleted_successfully'])){?>
-           <p class="text-center" style="color: green;"><?php echo $_GET['deleted_successfully'];?></p>
-        <?php } ?>
-
-        <?php if(isset($_GET['deleted_failure'])){?>
-           <p class="text-center" style="color: red;"><?php echo $_GET['deleted_failure'];?></p>
-        <?php } ?>
-
-
-
-        <?php if(isset($_GET['staff_created'])){?>
-           <p class="text-center" style="color: green;"><?php echo $_GET['staff_created'];?></p>
-        <?php } ?>
-
-
-
-        <?php if(isset($_GET['staff_failed'])){?>
-           <p class="text-center" style="color: red;"><?php echo $_GET['staff_failed'];?></p>
-        <?php } ?>
-
 
       <p class="text-center"></p>
       <div class="table-responsive">
-        <table class="table table-striped table-sm">
+      <table class="table table-striped table-sm table-bordered">
           <thead>
             <tr>
-              <th scope="col">Supplier Id</th>
-              <th scope="col">Supplier Name</th>
-              <th scope="col">Supplier Email</th>
-              <th scope="col">Supplier Address</th>
-              <th scope="col">Supplier Phone Number</th>
-              <th scope="col">Supplier Shop</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Supplier Id</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Supplier Name</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Supplier Email</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Supplier Address</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Supplier Phone Number</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Supplier Shop</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Edit</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Delete</th>
             </tr>
           </thead>
           <tbody>
 
             <?php foreach($suppliers as $supplier){?>
             <tr>
-              <td><?php echo htmlspecialchars($supplier['id']);?></td>
-              <td><?php echo htmlspecialchars($supplier['supplier_name']);?></td>
-              <td><?php echo htmlspecialchars($supplier['supplier_email']);?></td>
-              <td><?php echo htmlspecialchars($supplier['supplier_address']);?></td>
-              <td><?php echo htmlspecialchars($supplier['supplier_number']);?></td>
-              <td><?php echo htmlspecialchars($supplier['supplier_shop_name']);?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($supplier['id']);?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($supplier['supplier_name']);?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($supplier['supplier_email']);?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($supplier['supplier_address']);?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($supplier['supplier_number']);?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($supplier['supplier_shop_name']);?></td>
               
               <td><a class="btn btn-primary" href="edit_supplier.php?id=<?php echo $supplier['id'];?>"><i class="fas fa-edit"></i>Edit</a></td>
               <td><a class="btn btn-danger"  href="delete_supplier.php?id=<?php echo $supplier['id'];?>"><i class="fas fa-trash-alt"></i>Delete</a></td>
@@ -160,6 +132,24 @@
   </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+  <?php if (isset($_GET['error'])) : ?>
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: '<?php echo $_GET['error']; ?>'
+    })
+  <?php endif; ?>
+
+  <?php if (isset($_GET['success'])) : ?>
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: '<?php echo $_GET['success']; ?>'
+    })
+  <?php endif; ?>
+</script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>

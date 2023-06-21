@@ -65,33 +65,33 @@ $orders = $stmt2->get_result();
 
 
       <div class="table-responsive">
-        <table class="table table-striped table-sm">
+      <table class="table table-striped table-sm table-bordered">
           <thead>
             <tr>
-              <th scope="col">Order Id</th>
-              <th scope="col">Shoppe Order Id</th>
-              <th scope="col">Order Status</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Order Id</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Shoppe Order Id</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Order Status</th>
 
-              <th scope="col">Customer name</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Customer name</th>
 
-              <th scope="col">Total Payment</th>
-              <th scope="col">View</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Total Payment</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">View</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Edit</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Delete</th>
             </tr>
           </thead>
           <tbody>
 
             <?php foreach ($orders as $order) { ?>
               <tr <?php echo ($order['order_status'] == 'Some Condition') ? 'style="background-color: red;"' : ''; ?>>
-                <td><?php echo htmlspecialchars($order['id']); ?></td>
-                <td><?php echo htmlspecialchars($order['shoppe_order_id']); ?></td>
-                <td><?php echo htmlspecialchars($order['order_status']); ?></td>
-                <td><?php echo htmlspecialchars($order['customer_name']); ?></td>
-                <td><?php echo htmlspecialchars($order['total_payment']); ?></td>
-                <td><button class="btn btn-info view-btn" data-id="<?php echo htmlspecialchars($order['id']); ?>"><i class="fas fa-eye"></i> View</button></td>
-                <td><a class="btn btn-primary" href="edit_order.php?id=<?php echo htmlspecialchars($order['id']); ?>"><i class="fas fa-edit"></i> Edit</a></td>
-                <td><a class="btn btn-danger" href="delete.order.php?id=<?php echo htmlspecialchars($order['id']); ?>"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($order['id']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($order['shoppe_order_id']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($order['order_status']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($order['customer_name']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($order['total_payment']); ?></td>
+                <td style="text-align: center;"><button class="btn btn-info view-btn" data-id="<?php echo htmlspecialchars($order['id']); ?>"><i class="fas fa-eye"></i> View</button></td>
+                <td style="text-align: center;"><a class="btn btn-primary" href="edit_order.php?id=<?php echo htmlspecialchars($order['id']); ?>"><i class="fas fa-edit"></i> Edit</a></td>
+                <td style="text-align: center;"><a class="btn btn-danger" href="delete.order.php?id=<?php echo htmlspecialchars($order['id']); ?>"><i class="fas fa-trash-alt"></i> Delete</a></td>
               </tr>
             <?php } ?>
 

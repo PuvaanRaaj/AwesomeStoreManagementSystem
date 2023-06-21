@@ -45,7 +45,7 @@ if (isset($_GET['id'])) {
     } else {
         ?>
         <script>
-        window.location.href="staff.php?edit_failure_message=Error occurred, please try again"
+        window.location.href="staff.php?error=Error occurred, please try again"
       </script>
         <?php
         exit();
@@ -77,23 +77,23 @@ if (isset($_GET['id'])) {
                             <input type="hidden" name="id" value="<?php echo $staff['id']; ?>" />
                             <div class="form-group mt-2">
                                 <label>Staff Name</label>
-                                <input type="text" class="form-control" id="staff-name" value="<?php echo $staff['staff_name']; ?>" name="name" placeholder="Name" required/ readonly>
+                                <input type="text" class="form-control" id="name" value="<?php echo $staff['staff_name']; ?>" name="name" placeholder="Name" required/ readonly>
                             </div>
                             <div class="form-group mt-2">
                                 <label>Staff Age</label>
-                                <input type="text" class="form-control" id="staff-age" value="<?php echo $staff['staff_age']; ?>" name="age" placeholder="Age" required/>
+                                <input type="text" class="form-control" id="age" value="<?php echo $staff['staff_age']; ?>" name="age" placeholder="Age" required/>
                             </div>
                             <div class="form-group mt-2">
                                 <label>Staff Email</label>
-                                <input type="text" class="form-control" id="staff-email" value="<?php echo $staff['staff_email']; ?>" name="email" placeholder="Email" required/>
+                                <input type="text" class="form-control" id="email" value="<?php echo $staff['staff_email']; ?>" name="email" placeholder="Email" required/>
                             </div>
                             <div class="form-group mt-2">
                                 <label>Staff Address</label>
-                                <input type="text" class="form-control" id="staff-address" value="<?php echo $staff['staff_address']; ?>" name="address" placeholder="Address" required/>
+                                <input type="text" class="form-control" id="address" value="<?php echo $staff['staff_address']; ?>" name="address" placeholder="Address" required/>
                             </div>
                             <div class="form-group mt-2">
                                 <label>Staff Salary</label>
-                                <input type="text" class="form-control" id="staff-salary" value="<?php echo $staff['staff_salary']; ?>" name="salary" placeholder="Salary" required/>
+                                <input type="text" class="form-control" id="salary" value="<?php echo $staff['staff_salary']; ?>" name="salary" placeholder="Salary" required/>
                             </div>
                             <div class="form-group mt-3">
                                 <input type="submit" class="btn btn-primary" name="edit" value="Edit"/>
@@ -106,49 +106,80 @@ if (isset($_GET['id'])) {
     </div>
 </div>
 
+
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    document.getElementById('edit-form').addEventListener('submit', function(event) {
-        var staffName = document.getElementById('staff-name');
-        var staffAge = document.getElementById('staff-age');
-        var staffEmail = document.getElementById('staff-email');
-        var staffAddress = document.getElementById('staff-address');
-        var staffSalary = document.getElementById('staff-salary');
-        var staffPassword = document.getElementById('staff-password');
+document.getElementById('edit-form').addEventListener('submit', function(event) {
+    var staffName = document.querySelector('[name="name"]');
+    var staffAge = document.querySelector('[name="age"]');
+    var staffAddress = document.querySelector('[name="address"]');
+    var staffEmail = document.querySelector('[name="email"]');
+    var staffSalary = document.querySelector('[name="salary"]');
+    var staffPassword = document.querySelector('[name="password"]');
 
-        var namePattern = /^[A-Za-z0-9\s\-_]+$/;
-        var agePattern = /^[0-9]+$/;
-        var emailParts = staffEmail.value.split('@');
-        if (emailParts.length !== 2 || emailParts[0].length === 0 || emailParts[1].length === 0 || emailParts[1].indexOf('.') === -1) {
-            Swal.fire('Invalid email format');
-            event.preventDefault();
-        } 
+    var namePattern = /^[a-zA-Z\s]*$/;
+    var agePattern = /^(1[89]|[2-6]\d|70)$/;
+    var addressPattern = /^[a-zA-Z0-9\s\.,-]*$/;
+    var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    var salaryPattern = /^\d*\.?\d*$/;
+    var passwordPattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/;
 
-        var addressPattern = /.+/;
-        var salaryPattern = /^[0-9]+(\.[0-9]{1,2})?$/;
-        var passwordPattern = /^[\w@-]{8,}$/; // At least 8 characters, allows alphanumeric, @, -, _
+    if (!staffName.value.match(namePattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid staff name. Only alphabets and spaces are allowed.'
+        });
+        event.preventDefault();
+        return false;
+    }
 
-        if (!namePattern.test(staffName.value)) {
-            Swal.fire('Invalid staff name');
-            event.preventDefault();
-        } else if (!agePattern.test(staffAge.value)) {
-            Swal.fire('Invalid staff age');
-            event.preventDefault();
-        } else if (!emailPattern.test(staffEmail.value)) {
-            Swal.fire('Invalid staff email');
-            event.preventDefault();
-        } else if (!addressPattern.test(staffAddress.value)) {
-            Swal.fire('Invalid staff address');
-            event.preventDefault();
-        } else if (!salaryPattern.test(staffSalary.value)) {
-            Swal.fire('Invalid staff salary');
-            event.preventDefault();
-        } else if (!passwordPattern.test(staffPassword.value)) {
-            Swal.fire('Invalid staff password. It should be at least 8 characters long and can contain alphanumeric characters, @, -, _');
-            event.preventDefault();
-        }
-    });
+    if (!staffAge.value.match(agePattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid age. Age should be between 18 to 70.'
+        });
+        event.preventDefault();
+        return false;
+    }
+
+    if (!staffAddress.value.match(addressPattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid address. Only alphanumeric characters and spaces are allowed.'
+        });
+        event.preventDefault();
+        return false;
+    }
+
+    if (!staffEmail.value.match(emailPattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Please enter a valid email.'
+        });
+        event.preventDefault();
+        return false;
+    }
+
+    if (!staffSalary.value.match(salaryPattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid salary. Please enter a valid amount.'
+        });
+        event.preventDefault();
+        return false;
+    }
+
+    if (!staffPassword.value.match(passwordPattern)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid password. Password must be 8 to 32 characters long, contain at least 1 number, 1 uppercase letter, 1 lowercase letter, and 1 special character.'
+        });
+        event.preventDefault();
+        return false;
+    }
+});
 </script>
 
 

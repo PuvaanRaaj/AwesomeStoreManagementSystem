@@ -74,35 +74,35 @@ $products = $stmt2->get_result();
       
 
       <div class="table-responsive">
-        <table class="table table-striped table-sm">
+      <table class="table table-striped table-sm table-bordered">
           <thead>
             <tr>
-              <th scope="col">Product Id</th>
-              <th scope="col">Product Image</th>
-              <th scope="col">Product Name</th>
-              <th scope="col">Supplier ID</th>
-              <th scope="col">Product Price</th>
-              <th scope="col">Available Stock Quantity</th>
-              <th scope="col">Product Stock Limit</th>
-              <th scope="col">Created Date</th>
+              <th scope="col" style="text-align: center;">Product Id</th>
+              <th scope="col" style="text-align: center;">Product Image</th>
+              <th scope="col" style="text-align: center;">Product Name</th>
+              <th scope="col" style="text-align: center;">Supplier ID</th>
+              <th scope="col" style="text-align: center;">Product Price</th>
+              <th scope="col" style="text-align: center;">Available Stock Quantity</th>
+              <th scope="col" style="text-align: center;">Product Stock Limit</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Created Date</th>
 
 
-              <th scope="col">Edit Images</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
+              <th scope="col" style="text-align: center;vertical-align: middle;">Edit Images</th>
+              <th scope="col" style="text-align: center;vertical-align: middle;">Edit</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Delete</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($products as $product) { ?>
               <tr <?php echo ($product['stock_quantity'] < $product['stock_limit']) ? 'style="background-color: #FFE5CA;"' : ''; ?>>
-                <td><?php echo htmlspecialchars($product['id']); ?></td>
-                <td><img src="<?php echo "assets/product-images/" . $product['product_image']; ?>" style="width: 70px; height:70px" /></td>
-                <td><?php echo htmlspecialchars($product['product_name']); ?></td>
-                <td><?php echo htmlspecialchars($product['supplier_id']); ?></td>
-                <td><?php echo htmlspecialchars($product['product_price']); ?></td>
-                <td><?php echo htmlspecialchars($product['stock_quantity']); ?></td>
-                <td><?php echo htmlspecialchars($product['stock_limit']); ?></td>
-                <td><?php echo htmlspecialchars($product['created_at']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($product['id']); ?></td>
+                <td style="text-align: center;"><img src="<?php echo "assets/product-images/" . $product['product_image']; ?>" style="width: 70px; height:70px" /></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($product['product_name']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($product['supplier_id']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($product['product_price']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($product['stock_quantity']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($product['stock_limit']); ?></td>
+                <td style="text-align: center;"><?php echo htmlspecialchars($product['created_at']); ?></td>
 
                 <td><a class="btn btn-warning" href="<?php echo "edit_images.php?id=" . $product['id'] . "&product_name=" . $product['product_name']; ?>">Edit Images</a></td>
                 <td><a class="btn btn-primary" href="edit_product.php?id=<?php echo $product['id']; ?>"><i class="fas fa-edit"></i>Edit</a></td>

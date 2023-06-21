@@ -145,45 +145,34 @@
 
        <h2>Orders</h2>
        <hr>
-      <?php if(isset($_GET['order_created'])){?>
-           <p class="text-center" style="color: green;"><?php echo $_GET['order_created'];?></p>
-        <?php } ?>
-
-      <?php if(isset($_GET['order_updated'])){?>
-           <p class="text-center" style="color: green;"><?php echo $_GET['order_updated'];?></p>
-        <?php } ?>
-
-        <?php if(isset($_GET['order_failed'])){?>
-           <p class="text-center" style="color: red;"><?php echo $_GET['order_failed'];?></p>
-        <?php } ?>
 
 
 
 
       <div class="table-responsive">
-        <table class="table table-striped table-sm">
+      <table class="table table-striped table-sm table-bordered">
           <thead>
             <tr>
-              <th scope="col">Order Id</th>
-              <th scope="col">Shoppe Order Id</th>
-              <th scope="col">Order Status</th>
-              <th scope="col">Customer name</th>
-              <th scope="col">Order Quantity</th>
-              <th scope="col">Order Date</th>
-              <th scope="col">Sub Total</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Order Id</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Shoppe Order Id</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Order Status</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Customer name</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Order Quantity</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Order Date</th>
+              <th scope="col" style="text-align: center; vertical-align: middle;">Sub Total</th>
             </tr>
           </thead>
           <tbody>
 
           <?php foreach($orders as $order){?>
             <tr>
-              <td><?php echo htmlspecialchars($order['id'], ENT_QUOTES, 'UTF-8');?></td>
-              <td><?php echo htmlspecialchars($order['shoppe_order_id'], ENT_QUOTES, 'UTF-8');?></td>
-              <td><?php echo htmlspecialchars($order['order_status'], ENT_QUOTES, 'UTF-8');?></td>
-              <td><?php echo htmlspecialchars($order['customer_name'], ENT_QUOTES, 'UTF-8');?></td>
-              <td><?php echo htmlspecialchars($order['order_quantity'], ENT_QUOTES, 'UTF-8');?></td>
-              <td><?php echo htmlspecialchars($order['order_date'], ENT_QUOTES, 'UTF-8');?></td>
-              <td><?php echo htmlspecialchars($order['total_payment'], ENT_QUOTES, 'UTF-8');?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($order['id'], ENT_QUOTES, 'UTF-8');?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($order['shoppe_order_id'], ENT_QUOTES, 'UTF-8');?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($order['order_status'], ENT_QUOTES, 'UTF-8');?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($order['customer_name'], ENT_QUOTES, 'UTF-8');?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($order['order_quantity'], ENT_QUOTES, 'UTF-8');?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($order['order_date'], ENT_QUOTES, 'UTF-8');?></td>
+              <td style="text-align: center;"><?php echo htmlspecialchars($order['total_payment'], ENT_QUOTES, 'UTF-8');?></td>
             </tr>
           <?php }?>
 

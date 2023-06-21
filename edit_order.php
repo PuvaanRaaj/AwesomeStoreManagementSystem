@@ -47,13 +47,13 @@ if(isset($_GET['id'])){
     if($stmt->execute()){
         ?>
         <script>
-          window.location.href="order.php?order_updated=Order has been updated successfully"
+          window.location.href="order.php?success=Order has been updated successfully"
         </script>
         <?php
     }else{
       ?>
         <script>
-          window.location.href="order.php?order_failed=Error occured, try again"
+          window.location.href="order.php?error=Error occured, try again"
         </script>
         <?php
     }

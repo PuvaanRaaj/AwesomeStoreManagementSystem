@@ -38,7 +38,7 @@ if(isset($_POST['create_supplier'])){
     }else{
         ?>
         <script>
-        window.location.href="supplier.php?success=supplier cannot be created"
+        window.location.href="supplier.php?error=supplier cannot be created"
       </script>
         <?php
     }

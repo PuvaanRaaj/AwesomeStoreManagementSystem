@@ -90,6 +90,85 @@
     </main>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Retrieve the form by its ID
+    var form = document.getElementById('create-form');
+
+    // Add a submit event listener
+    form.addEventListener('submit', function(event) {
+        // Retrieve the form field values
+        var shoppeOrderId = form['shoppe_order_id'].value;
+        var orderStatus = form['order_status'].value;
+        var productId = form['product_id'].value;
+        var customerName = form['customer_name'].value;
+        var customerEmail = form['customer_email'].value;
+        var customerAddress = form['customer_address'].value;
+        var customerNumber = form['customer_number'].value;
+        var orderQuantity = form['order_quantity'].value;
+        var totalPrice = form['total_price'].value;
+        var totalPayment = form['total_payment'].value;
+
+        // Check if any of the fields are empty
+        if (!shoppeOrderId || !orderStatus || !productId || !customerName || !customerEmail || !customerAddress || !customerNumber || !orderQuantity || !totalPrice || !totalPayment) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Input Required',
+                text: 'Please fill all fields.'
+            });
+            event.preventDefault();
+            return false;
+        }
+
+        // Check email format
+        var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (!customerEmail.match(emailPattern)) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Email',
+                text: 'Please enter a valid email.'
+            });
+            event.preventDefault();
+            return false;
+        }
+
+        // Validate customer name - allow only alphanumeric and spaces, disallow special characters
+        var namePattern = /^[a-zA-Z0-9 ]*$/;
+        if (!customerName.match(namePattern)) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Customer Name',
+                text: 'Special characters are not allowed.'
+            });
+            event.preventDefault();
+            return false;
+        }
+
+        // Validate customer number - must start with 0
+        if (customerNumber.charAt(0) !== '0') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Customer Number',
+                text: 'Must start with "0".'
+            });
+            event.preventDefault();
+            return false;
+        } 
+
+        // Check numerical values
+        if (isNaN(productId) || isNaN(orderQuantity) || isNaN(totalPrice) || isNaN(totalPayment)) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Numerical Value',
+                text: 'Please provide valid numerical values for Product ID, Order Quantity, Total Price, and Total Payment.'
+            });
+            event.preventDefault();
+            return false;
+        }
+    });
+</script>
+
+
 
 <script>
     // Parse the URL parameters

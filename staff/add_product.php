@@ -25,7 +25,7 @@
                         <p style="color: red;"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
                         <div class="form-group mt-2">
                             <label>Product Name</label>
-                            <input type="text" class="form-control" name="name" placeholder="Please enter the product name" pattern="[A-Za-z0-9\s\-_]+" title="Product name should only contain letters, numbers, spaces, hyphen(-) and underscore(_)" required/>
+                            <input type="text" class="form-control" name="name" placeholder="Please enter the product name"  title="Product name should only contain letters, numbers, spaces, hyphen(-) and underscore(_)" required/>
                         </div>
                         <div class="form-group mt-2">
                             <label>Stock Quantity</label>
@@ -67,32 +67,38 @@
     </main>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script>
+    document.getElementById('create-form').addEventListener('submit', function(event) {
+        var productName = document.querySelector('[name="name"]');
+        var productQuantity = document.querySelector('[name="quantity"]');
+        var productLimit = document.querySelector('[name="limit"]');
+        var productPrice = document.querySelector('[name="price"]');
+        var supplierId = document.querySelector('[name="supplier_id"]');
 
-         <script>
-                // Parse the URL parameters
-                const urlParams = new URLSearchParams(window.location.search);
+        var namePattern = /^[A-Za-z0-9\s\-_]+$/;
+        var numberPattern = /^[0-9]+$/;
+        var decimalPattern = /^[0-9]+(\.[0-9]{1,2})?$/;
 
-                // If a product was created successfully
-                if (urlParams.has('product_created')) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: urlParams.get('product_created')
-                });
-                }
-
-                // If there was an error creating the product
-                if (urlParams.has('product_failed')) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: urlParams.get('product_failed')
-                });
-                }
-            </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        if (!namePattern.test(productName.value)) {
+            Swal.fire('Invalid product name. Cannot contain special characters');
+            event.preventDefault();
+        } else if (!numberPattern.test(productQuantity.value)) {
+            Swal.fire('Invalid quantity');
+            event.preventDefault();
+        } else if (!numberPattern.test(productLimit.value)) {
+            Swal.fire('Invalid limit');
+            event.preventDefault();
+        } else if (!decimalPattern.test(productPrice.value)) {
+            Swal.fire('Invalid price');
+            event.preventDefault();
+        } else if (!numberPattern.test(supplierId.value)) {
+            Swal.fire('Invalid supplier ID');
+            event.preventDefault();
+        }
+    });
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>

@@ -85,30 +85,30 @@ $staffs = $stmt2->get_result();
 
             <p class="text-center"></p>
             <div class="table-responsive">
-                <table class="table table-striped table-sm">
+            <table class="table table-striped table-sm table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">Staff Id</th>
-                            <th scope="col">Staff Name</th>
-                            <th scope="col">Staff Age</th>
-                            <th scope="col">Staff Email</th>
-                            <th scope="col">Staff Address</th>
-                            <th scope="col">Staff Salary</th>
-                            <th scope="col">Edit</th>
-                            <th scope="col">Delete</th>
+                        <th scope="col" style="text-align: center;">Staff Id</th>
+                        <th scope="col" style="text-align: center;">Staff Name</th>
+                        <th scope="col" style="text-align: center;">Staff Age</th>
+                        <th scope="col" style="text-align: center;">Staff Email</th>
+                        <th scope="col" style="text-align: center;">Staff Address</th>
+                        <th scope="col" style="text-align: center;">Staff Salary</th>
+                        <th scope="col" style="text-align: center;">Edit</th>
+                        <th scope="col" style="text-align: center;">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($staffs as $staff) : ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($staff['id']); ?></td>
-                                <td><?php echo htmlspecialchars($staff['staff_name']); ?></td>
-                                <td><?php echo htmlspecialchars($staff['staff_age']); ?></td>
-                                <td><?php echo htmlspecialchars($staff['staff_email']); ?></td>
-                                <td><?php echo htmlspecialchars($staff['staff_address']); ?></td>
-                                <td><?php echo htmlspecialchars($staff['staff_salary']); ?></td>
-                                <td><a class="btn btn-primary" href="edit_staff.php?id=<?php echo htmlspecialchars($staff['id']); ?>"><i class="fas fa-edit"></i> Edit</a></td>
-                                <td><a class="btn btn-danger" href="delete_staff.php?id=<?php echo htmlspecialchars($staff['id']); ?>"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                                <td style="text-align: center;"><?php echo htmlspecialchars($staff['id']); ?></td>
+                                <td style="text-align: center;"><?php echo htmlspecialchars($staff['staff_name']); ?></td>
+                                <td style="text-align: center;"><?php echo htmlspecialchars($staff['staff_age']); ?></td>
+                                <td style="text-align: center;"><?php echo htmlspecialchars($staff['staff_email']); ?></td>
+                                <td style="text-align: center;"><?php echo htmlspecialchars($staff['staff_address']); ?></td>
+                                <td style="text-align: center;"><?php echo htmlspecialchars($staff['staff_salary']); ?></td>
+                                <td style="text-align: center;"><a class="btn btn-primary" href="edit_staff.php?id=<?php echo htmlspecialchars($staff['id']); ?>"><i class="fas fa-edit"></i> Edit</a></td>
+                                <td style="text-align: center;"><a class="btn btn-danger" href="delete_staff.php?id=<?php echo htmlspecialchars($staff['id']); ?>"><i class="fas fa-trash-alt"></i> Delete</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -135,9 +135,29 @@ $staffs = $stmt2->get_result();
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+  <?php if(isset($_GET['error'])): ?>
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: '<?php echo $_GET['error']; ?>'
+    })
+  <?php endif; ?>
+
+  <?php if(isset($_GET['success'])): ?>
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: '<?php echo $_GET['success']; ?>'
+    })
+  <?php endif; ?>
+</script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-<script src="dashboard.js"></script>
+
 </body>
 </html>

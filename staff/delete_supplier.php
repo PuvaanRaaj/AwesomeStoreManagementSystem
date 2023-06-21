@@ -16,14 +16,14 @@ if(isset($_GET['id'])){
     if($stmt->execute()){
         ?>
         <script>
-        window.location.href="supplier.php?success=deleted_successfully=Supplier details has been deleted successfully"
+        window.location.href="supplier.php?success=Supplier details has been deleted successfully"
       </script>
         <?php
       
     }else{
         ?>
         <script>
-        window.location.href="supplier.php?deleted_failure=Could not delete supplier detail"
+        window.location.href="supplier.php?error=Could not delete supplier detail"
       </script>
         <?php 
     }

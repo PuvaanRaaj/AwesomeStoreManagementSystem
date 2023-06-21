@@ -22,14 +22,14 @@ include('config/db.php');
         if($stmt->execute()){
             ?>
             <script>
-            window.location.href="staff.php?deleted_successfully=Staff details has been deleted successfully"
+            window.location.href="staff.php?success=Staff details has been deleted successfully"
           </script>
             <?php
 
         }else{
             ?>
             <script>
-            window.location.href="staff.php?deleted_failure=Could not delete staff detail"
+            window.location.href="staff.php?error=Could not delete staff detail"
           </script>
             <?php
 

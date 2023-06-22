@@ -22,8 +22,8 @@
                  <h3 class="font-weight-bold">Account info</h3>
                  <hr class="mx-auto">
                  <div class="account-info">
-                     <p>Id      :<span> <?php if(isset($_SESSION['admin_name'])){ echo $_SESSION['id'];} ?></span></p>
-                     <p>Username:<span> <?php if(isset($_SESSION['admin_name'])){ echo $_SESSION['username'];} ?></span></p>
+                     <p>Id      :<span> <?php if(isset($_SESSION['id'])){ echo $_SESSION['id'];} ?></span></p>
+                     <p>Username:<span> <?php if(isset($_SESSION['username'])){ echo $_SESSION['username'];} ?></span></p>
                      <p>Name    :<span> <?php if(isset($_SESSION['admin_name'])){ echo $_SESSION['admin_name'];} ?></span></p>
                      <p>Email   :<span> <?php if(isset($_SESSION['admin_email'])){ echo $_SESSION['admin_email'];} ?></span></p>
                  </div>

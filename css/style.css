@@ -102,3 +102,16 @@ img {
     height: 100px;
 }
   
+
+/* Admin Dashboard */
+
+.card {
+    margin-bottom: 20px;
+  }
+  
+  .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }

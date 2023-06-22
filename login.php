@@ -39,7 +39,7 @@ if(isset($_POST['login_btn'])){
               
               ?>
               <script>
-                window.location.href="index.php?login_success=logged in successfully"
+                window.location.href="index.php?success=logged in successfully"
               </script>
               <?php
            } else {
@@ -113,6 +113,25 @@ if(isset($_POST['login_btn'])){
         </div>
     </div>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+  <?php if (isset($_GET['error'])) : ?>
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: '<?php echo $_GET['error']; ?>'
+    })
+  <?php endif; ?>
+
+  <?php if (isset($_GET['success'])) : ?>
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: '<?php echo $_GET['success']; ?>'
+    })
+  <?php endif; ?>
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 

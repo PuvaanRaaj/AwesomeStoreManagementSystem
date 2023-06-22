@@ -41,6 +41,12 @@ $total_no_of_pages = ceil($total_records / $total_records_per_page);
 $stmt2 = $conn->prepare("SELECT * FROM orders LIMIT $offset,$total_records_per_page");
 $stmt2->execute();
 $orders = $stmt2->get_result();
+
+// Chart
+$stmt3 = $conn->prepare("SELECT DATE(order_date) as date, SUM(total_payment) as sum FROM orders GROUP BY DATE(order_date)");
+$stmt3->execute();
+$payments = $stmt3->get_result();
+
 ?>
 
 <div class="container-fluid">
@@ -164,6 +170,29 @@ $orders = $stmt2->get_result();
   </div>
 </div>
 
+<script>
+    $(document).ready(function(){
+    $(".view-btn").click(function(){
+        var orderId = $(this).data('id');
+
+        $.ajax({
+            url: 'get_order.php',
+            type: 'GET',
+            data: {id: orderId},
+            success: function(data){
+                // assuming data is a HTML
+                $('#orderDetails').html(data);
+                $('#orderModal').modal('show');
+                console.log("Success: ", data);
+            },
+            error: function(error) {
+                console.log("Error: ", error);
+            }
+        });
+    });
+});
+
+    </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>

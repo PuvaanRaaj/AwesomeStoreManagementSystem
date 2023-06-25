@@ -76,7 +76,7 @@ if(isset($_GET['id'])){
           <div class="mb-3">
             <label class="form-label"><strong>Order ID</strong> </label>
             <input type="text" class="form-control" value="<?php echo $order['id'];?>" disabled>
-          </div>
+          </div> 
 
           <div class="mb-3">
             <label class="form-label">Shoppe Order Id</label>

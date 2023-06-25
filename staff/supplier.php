@@ -1,7 +1,7 @@
 <?php include('layouts/header.php')?>
 
 <?php
-    if(!isset($_SESSION['staff_logged_in'])){
+    if(!isset($_SESSION['admin_logged_in'])){
       ?>
       <script>
         window.location.href="login.php"
@@ -69,6 +69,7 @@
       <p class="text-center"></p>
       <div class="table-responsive">
       <table class="table table-striped table-sm table-bordered">
+          
           <thead>
             <tr>
               <th scope="col" style="text-align: center; vertical-align: middle;">Supplier Id</th>
@@ -100,9 +101,14 @@
             <?php }?>
 
           </tbody>
+          
         </table>
+        
+                <p class="text-center" style="font-size: 1.2em; color: red;">
+                   <em>Please note: The leading '0' is removed from the supplier number. When calling, remember to start the number with '0'. For example: 0123456789.</em>
+                </p>
 
-
+            <nav aria-label="Page navigation example" class="mx-auto">
 
         <nav aria-label="Page navigation example" class="mx-auto">
         <ul class="pagination mt-5 mx-auto">

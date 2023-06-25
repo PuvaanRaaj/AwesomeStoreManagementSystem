@@ -113,6 +113,10 @@ $staffs = $stmt2->get_result();
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                
+                <p class="text-center" style="font-size: 1.2em; color: red;">
+                    Please note that staff passwords are not displayed for security purposes, even though the admin is the person who created them.
+                </p>
 
                 <nav aria-label="Page navigation example" class="mx-auto">
                     <ul class="pagination mt-5 mx-auto">

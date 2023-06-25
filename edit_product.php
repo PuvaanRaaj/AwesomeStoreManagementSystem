@@ -1,78 +1,75 @@
 <?php
-
 include('layouts/header.php');
+include('config/db.php');  // make sure you have your database connection here
 
-if (isset($_GET['id'])) {
-  $product_id = $_GET['id'];
-  $stmt = $conn->prepare("SELECT * FROM products WHERE id=?");
-  $stmt->bind_param('i', $product_id);
-  $stmt->execute();
-
-  $products = $stmt->get_result();
-} else if (isset($_POST['edit_btn'])) {
-
-  // Validate product name
-  $product_name = trim($_POST['name']);
-  if (!preg_match("/^[A-Za-z0-9\s\-_]+$/", $product_name)) {
+// First, check if form was submitted via POST
+if (isset($_POST['edit_btn'])) {
+    // Validate product name
+    $product_name = trim($_POST['name']);
+    if (!preg_match("/^[A-Za-z0-9\s\-_]+$/", $product_name)) {
 ?>
     <script>
-      window.location.href = "edit_product.php?id='.$_POST['id'].'&error=Invalid product name"
+      window.location.href = "edit_product.php?id=<?php echo $_POST['id']; ?>&error=Invalid product name"
     </script>
   <?php
     exit();
-  }
+    }
 
-  // Validate stock quantity and limit
-  $stock_quantity = $_POST['stock'];
-  $stock_limit = $_POST['limit'];
-  if ($stock_quantity <  $stock_limit) {
+    // Validate stock quantity and limit
+    $stock_quantity = $_POST['stock'];
+    $stock_limit = $_POST['limit'];
+    if ($stock_quantity <  $stock_limit) {
   ?>
     <script>
-      window.location.href = "edit_product.php?id='.$_POST['id'].'&error=Quantity should not be less than  limit"
+      window.location.href = "edit_product.php?id=<?php echo $_POST['id']; ?>&error=Quantity should not be less than limit"
     </script>
   <?php
     exit();
-  }
-  // Validate unit price
-  $unit_price = $_POST['price'];
-  if ($unit_price < 0) {
+    }
+    // Validate unit price
+    $unit_price = $_POST['price'];
+    if ($unit_price < 0) {
   ?>
     <script>
-      window.location.href = "edit_product.php?id='.$_POST['id'].'&error=Price must be non-negative"
+      window.location.href = "edit_product.php?id=<?php echo $_POST['id']; ?>&error=Price must be non-negative"
     </script>
   <?php
     exit();
-  }
+    }
 
-  $product_id = $_POST['id'];
+    $product_id = $_POST['id'];
 
-  $stmt = $conn->prepare("UPDATE products SET product_name=?, stock_quantity=?, stock_limit=?, product_price=?
+    $stmt = $conn->prepare("UPDATE products SET product_name=?, stock_quantity=?, stock_limit=?, product_price=?
                                   WHERE id=?");
-  $stmt->bind_param('siidi', $product_name, $stock_quantity, $stock_limit, $unit_price, $product_id);
+    $stmt->bind_param('siidi', $product_name, $stock_quantity, $stock_limit, $unit_price, $product_id);
 
-  if ($stmt->execute()) {
+    if ($stmt->execute()) {
   ?>
     <script>
       window.location.href = "products.php?success=Product details has been updated successfully"
     </script>
   <?php
-  } else {
+    } else {
   ?>
     <script>
       window.location.href = "products.php?error=Error occurred, try again"
     </script>
   <?php
-  }
+    }
+} else if (isset($_GET['id'])) { // If page is loaded with a GET request
+    $product_id = $_GET['id'];
+    $stmt = $conn->prepare("SELECT * FROM products WHERE id=?");
+    $stmt->bind_param('i', $product_id);
+    $stmt->execute();
+    $products = $stmt->get_result();
 } else {
-  ?>
-  <script>
-    window.location.href = "products.php"
-  </script>
-<?php
-  exit;
+    ?>
+    <script>
+        window.location.href = "products.php"
+    </script>
+    <?php
+    exit();
 }
-
-
 ?>
 
 <div class="container-fluid">
@@ -108,7 +105,10 @@ if (isset($_GET['id'])) {
               } ?>
             </p>
 
+           
+
             <?php foreach ($products as $product) { ?>
+              <input type="hidden" name="id" value="<?php echo htmlspecialchars($product['id']); ?>">
               <!-- Product Name -->
               <div class="form-group mt-2">
                 <label>Product Name</label>
